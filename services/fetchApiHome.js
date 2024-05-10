@@ -1,28 +1,22 @@
 export async function fetchAPI() {
+    const moviesHome = [ 
+        "the exorcist",
+        "the exorcism of Emily Rose",
+        "schindler's list",
+        "naruto",
+        "white chicks",
+        "ted"
+    ]
+    
     const data = [];
-    let req = await fetch(`https://www.omdbapi.com/?apikey=654f9fd1&t=the%20exorcist`);
-    let res = await req.json();
+    moviesHome.forEach(async (element) => {
+    const req = await fetch(`https://www.omdbapi.com/?apikey=654f9fd1&t=${element}`);
+    const res = await req.json();
     data.push(res)
+});
+    
+    
 
-    req = await fetch(`https://www.omdbapi.com/?apikey=654f9fd1&t=the%20exorcism%20of%20Emily%20Rose`);
-    res = await req.json();
-    data.push(res)
-
-    req = await fetch(`https://www.omdbapi.com/?apikey=654f9fd1&t=schindler%27s%20list`);
-    res = await req.json();
-    data.push(res)
-
-    req = await fetch(`https://www.omdbapi.com/?apikey=654f9fd1&t=the%20exorcism%20of%20Emily%20Rose`);
-    res = await req.json();
-    data.push(res)
-
-    req = await fetch(`https://www.omdbapi.com/?apikey=654f9fd1&t=schindler%27s%20list`);
-    res = await req.json();
-    data.push(res)
-
-    req = await fetch(`https://www.omdbapi.com/?apikey=654f9fd1&t=the%20exorcism%20of%20Emily%20Rose`);
-    res = await req.json();
-    data.push(res)
-
+console.log(data)
     return data;
 };

@@ -7,6 +7,7 @@ const divCards = document.getElementById("div-cards");
 
 async function createCard() {
   const data = await fetchAPI()
+  console.log(data)
   data.map(element => divCards.innerHTML += `
     <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
       <div class="card mb-4" style="width: 22rem;">
@@ -24,5 +25,6 @@ async function createCard() {
       </div> 
     </div>`)
 };
+createCard();
 
-window.addEventListener("load", () => createCard()) 
+window.addEventListener("load", async () => createCard()) 
