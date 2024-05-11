@@ -1,12 +1,15 @@
+import { moviesHome } from './data/datahome.js';
 import { fetchAPI } from './services/fetchApiHome.js';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+
+
 const divCards = document.getElementById("div-cards");
 
-async function createCard() {
-  const data = await fetchAPI()
+async function createCard(movies) {
+  const data = await fetchAPI(movies)
   console.log(data)
   data.map(element => divCards.innerHTML += `
     <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
@@ -25,6 +28,8 @@ async function createCard() {
       </div> 
     </div>`)
 };
-createCard();
 
-window.addEventListener("load", async () => createCard()) 
+window.addEventListener("load", async () => {
+  createCard(moviesHome);
+  
+}) 
