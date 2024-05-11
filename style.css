@@ -34,6 +34,13 @@
   color: black;
   
 }
+
+.h3-home {
+  display: flex;
+  justify-content: center;
+  font-family: "Limelight", sans-serif;
+  color: rgb(156, 28, 28);
+}
   
   
 
