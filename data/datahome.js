@@ -10,7 +10,7 @@ export const moviesHome = [
 const allMovies = [
     {
         genre: "Horror",
-        movies: ""
+        movies: ["Immaculate", "The Watchers", "Resident evil"]
     },
     {
         genre: "Thriller",
@@ -22,19 +22,19 @@ const allMovies = [
     },
     {
         genre: "Drama",
-        movies: ""
+        movies: [ "Challengers", "Portrait of a Lady on Fire", "Boyz n the Hood", "Roma", "The green mile", "A beutiful mind", "unfaithful", "The Pursuit of Happyness", "Schindler s List", "Monster", "The Lover", "A star is born", "the greatest showman", "me before you", "My girl", "A Walk to Remember", "Call Me by Your Name", "The Lion King", "Marley & Me", "A Dog's Tale", "Memoirs of a Geisha"]
     },
     {
         genre: "Action",
-        movies: ""
+        movies: ["Scarface", "Gladiator", "GoldenEye", "Die Another day", "Twister", "The mummy", "The day after tomorrow", "Colombiana", "The Woman King", "Batman Begins", "Crank", "The Mask of zorro", "Tomb Raider", "Damsel", "The iron claw", "Aquaman and the Lost Kingdom", "Fast & Furious", "Man on Fire", "I am Legend", "Resident evil", "Charlie's Angels"]
     },
     {
         genre: "Classics",
-        movies: [ "The godfather", "Home Alone", "Pretty Woman", "Dirty dance", "Ghost", "The blue lagoon", "Saturday Night Fever", "Face/Off", "Grease", "Titanic", "Forrest Gump", "Selena", "The Sixth Sense", "Men in Black", "Carrie", "Malcolm X", "There s Something About Mary", "Schindler's List", "Hoop Dreams", "The Fugitive", "A Nightmare on Elm Street" ]
+        movies: [ "The godfather", "Home Alone", "Pretty Woman", "Dirty dance", "Ghost", "The blue lagoon", "Saturday Night Fever", "Face/Off", "Grease", "Titanic", "Forrest Gump", "Selena", "The Sixth Sense", "Men in Black", "Carrie", "Malcolm X", "There s Something About Mary", "Steel Magnolias", "Hoop Dreams", "The Fugitive", "A Nightmare on Elm Street" ]
     },
     {
         genre: "Comedy",
-        movies: ["Step Brothers", "White chicks", "ted", "Clueless", "Bridesmaids", "The hangover", "American pie", "School of rock", ""]
+        movies: ["Step Brothers", "White chicks", "ted", "Clueless", "Bridesmaids", "The hangover", "American pie", "School of rock", "Unfrosted", "No Hard feelings", "We're the millers", "Joy ride", "Girls trip", "Crazy Rich Asians", "Palm Springs", "My cousin vinny", "Hot Pursuit", "Fading Gigolo", "How to Be Single", "The Hustle", "Little Man" ]
     },
     {
         genre: "Science Fiction",
