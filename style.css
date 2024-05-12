@@ -26,6 +26,9 @@
   font-style: normal;
   display: flex;
   justify-content: center;
+  font-size: 35px;
+  margin-top: 30px;
+  margin-bottom: 50px;
 }
 
 .icon-favorite {
@@ -44,6 +47,11 @@
 
 .btn-nav-signout {
   margin-left: 370px;
+}
+
+.btn-star {
+  display: flex;
+  justify-content: center;
 }
   
   
