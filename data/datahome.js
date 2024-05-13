@@ -10,11 +10,11 @@ export const moviesHome = [
 const allMovies = [
     {
         genre: "Horror",
-        movies: ["Immaculate", "The Watchers", "Resident evil"]
+        movies: [ "Immaculate", "The Watchers", "Resident evil", "Abigail", "The jester", "talk to me", "The last thing mary saw", "Dead Silence", "Evil dead rise", "Smile", "US", "Night swim", "Sinister", "The visit", "saw", "A quiet place", "The black phone", "The ring", "When evil lurks", "Imaginary", "The exorcist:Believer" ]
     },
     {
         genre: "Thriller",
-        movies: [ "War of the Worlds", "Blow Out", "Inside Man", "Get Out", "The invisible man", "The Dark Knight", "Parasite", "The Beekeeper", "The Handmaiden", "Zodiac", "Children of Men", "Jaws", "The black phone", "Alone", "The Guilty", "Fair play", "Missing", "Leave the world behind", "Deep water", "Sleeping Dogs", "Damaged" ]
+        movies: [ "War of the Worlds", "Blow Out", "Inside Man", "Get Out", "The invisible man", "The Dark Knight", "Parasite", "The Beekeeper", "The Handmaiden", "Zodiac", "Children of Men", "Jaws", "The Call", "Alone", "The Guilty", "Fair play", "Missing", "Leave the world behind", "Deep water", "Sleeping Dogs", "Damaged" ]
     },
     {
         genre: "Marvel",
@@ -26,7 +26,7 @@ const allMovies = [
     },
     {
         genre: "Action",
-        movies: ["Scarface", "Gladiator", "GoldenEye", "Die Another day", "Twister", "The mummy", "The day after tomorrow", "Colombiana", "The Woman King", "Batman Begins", "Crank", "The Mask of zorro", "Tomb Raider", "Damsel", "The iron claw", "Aquaman and the Lost Kingdom", "Fast & Furious", "Man on Fire", "I am Legend", "Resident evil", "Charlie's Angels"]
+        movies: ["Scarface", "Gladiator", "GoldenEye", "Die Another day", "Twister", "The mummy", "The day after tomorrow", "Colombiana", "The Woman King", "Batman Begins", "Crank", "The Mask of zorro", "Tomb Raider", "Damsel", "The iron claw", "Aquaman and the Lost Kingdom", "Fast & Furious", "Man on Fire", "I am Legend", "World War Z", "Charlie's Angels"]
     },
     {
         genre: "Classics",
