@@ -7,7 +7,7 @@ export const moviesHome = [
     "ted"
 ];
 
-const allGenreAndMovies = [
+export const allGenreAndMovies = [
     {
         id: 1,
         genre: "Horror",

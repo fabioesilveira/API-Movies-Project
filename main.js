@@ -1,26 +1,27 @@
-import { moviesHome } from './data/datahome.js';
+import { allGenreAndMovies, moviesHome } from './data/datahome.js';
 import { fetchAPI } from './services/fetchApiHome.js';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-
-
+const btnThriller = document.getElementById("btn-thriller");
+const btnHorror = document.getElementById("btn-horror");
 const divCards = document.getElementById("div-cards");
+
+let isFavorite = false
 
 async function createCard(movies) {
   const data = await fetchAPI(movies)
-  console.log(data)
+  divCards.innerHTML = ""
   data.map(element => divCards.innerHTML += `
     <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
       <div class="card mb-4" style="width: 22rem;">
         <img src="${element.Poster}" class="card-img-top" alt="...">
         <div class="card-body">
           <button class="btn">
-           <i class="bi bi-x-circle-fill "></i>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-              </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill icon-favorite icons-star" viewBox="0 0 16 16">
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
           </button>
           <h5 class="card-title">Title: ${element.Title}</h5>
           <p class="card-text">Discription: ${element.Plot}</p>
@@ -31,7 +32,28 @@ async function createCard(movies) {
     </div>`)
 };
 
+btnHorror.addEventListener("click", async () => {
+  const textValue = btnHorror.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
+
+btnThriller.addEventListener("click", async () => {
+  const textValue = btnThriller.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+})
+
 window.addEventListener("load", async () => {
-  createCard(moviesHome);
+  await createCard(moviesHome);
+
+  const iconsStar = document.querySelectorAll(".icons-star")
+  iconsStar.forEach(element => {
+    element.addEventListener("click", () => {
+      element.classList.add("favorite")
+    })
+  });
 
 }) 

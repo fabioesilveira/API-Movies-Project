@@ -34,7 +34,7 @@
 .icon-favorite {
   width: 30px;
   height: 30px;
-  color: black;
+
   
 }
 
@@ -52,6 +52,10 @@
 .btn-star {
   display: flex;
   justify-content: center;
+}
+
+.favorite {
+  color: goldenrod;
 }
   
   
