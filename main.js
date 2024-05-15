@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const btnThriller = document.getElementById("btn-thriller");
 const btnHorror = document.getElementById("btn-horror");
+const btnMarvel = document.getElementById("btn-marvel");
+const btnDrama = document.getElementById("btn-drama");
+const btnAction = document.getElementById("btn-action");
 const divCards = document.getElementById("div-cards");
 
 let isFavorite = false
@@ -15,7 +18,7 @@ async function createCard(movies) {
   divCards.innerHTML = ""
   data.map(element => divCards.innerHTML += `
     <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
-      <div class="card mb-4" style="width: 22rem;">
+      <div class="card mb-3" style="width: 22rem;">
         <img src="${element.Poster}" class="card-img-top" alt="...">
         <div class="card-body">
           <button class="btn">
@@ -24,7 +27,7 @@ async function createCard(movies) {
           </svg>
           </button>
           <h5 class="card-title">Title: ${element.Title}</h5>
-          <p class="card-text">Discription: ${element.Plot}</p>
+          <p class="card-text">Description: ${element.Plot}</p>
           <p class="card-text">Relesead date: ${element.Released}</p>
           
         </div> 
@@ -41,6 +44,27 @@ btnHorror.addEventListener("click", async () => {
 
 btnThriller.addEventListener("click", async () => {
   const textValue = btnThriller.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
+
+btnMarvel.addEventListener("click", async () => {
+  const textValue = btnMarvel.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
+
+btnDrama.addEventListener("click", async () => {
+  const textValue = btnDrama.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
+
+btnAction.addEventListener("click", async () => {
+  const textValue = btnAction.textContent;
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   createCard(findGenre.movies);

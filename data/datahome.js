@@ -26,7 +26,7 @@ export const allGenreAndMovies = [
     {
         id: 4,
         genre: "Drama",
-        movies: [ "Challengers", "Portrait of a Lady on Fire", "Boyz n the Hood", "Roma", "The green mile", "A beutiful mind", "unfaithful", "The Pursuit of Happyness", "Schindler s List", "Monster", "The Lover", "A star is born", "the greatest showman", "me before you", "My girl", "A Walk to Remember", "Call Me by Your Name", "The Lion King", "Marley & Me", "A Dog's Tale", "Memoirs of a Geisha"]
+        movies: [ "Challengers", "Portrait of a Lady on Fire", "Boyz n the Hood", "Roma", "The green mile", "A beutiful mind", "unfaithful", "The Pursuit of Happyness", "Schindler's List", "Monster", "The Lover", "A star is born", "the greatest showman", "me before you", "My girl", "A Walk to Remember", "Call Me by Your Name", "The Lion King", "Marley and me", "A Dog's Tale", "Memoirs of a Geisha"]
     },
     {
         id: 5,
