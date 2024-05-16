@@ -11,6 +11,9 @@ const btnDrama = document.getElementById("btn-drama");
 const btnAction = document.getElementById("btn-action");
 const btnClassics = document.getElementById("btn-classics");
 const btnComedy = document.getElementById("btn-comedy");
+const btnScienceFiction = document.getElementById("btn-science-fiction");
+const btnAnimes = document.getElementById("btn-animes");
+const btnSeries = document.getElementById("btn-series");
 const divCards = document.getElementById("div-cards");
 
 let isFavorite = false
@@ -81,6 +84,27 @@ btnClassics.addEventListener("click", async () => {
 
 btnComedy.addEventListener("click", async () => {
   const textValue = btnComedy.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
+
+btnScienceFiction.addEventListener("click", async () => {
+  const textValue = btnScienceFiction.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
+
+btnAnimes.addEventListener("click", async () => {
+  const textValue = btnAnimes.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
+
+btnSeries.addEventListener("click", async () => {
+  const textValue = btnSeries.textContent;
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   createCard(findGenre.movies);
