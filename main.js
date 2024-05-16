@@ -9,6 +9,8 @@ const btnHorror = document.getElementById("btn-horror");
 const btnMarvel = document.getElementById("btn-marvel");
 const btnDrama = document.getElementById("btn-drama");
 const btnAction = document.getElementById("btn-action");
+const btnClassics = document.getElementById("btn-classics");
+const btnComedy = document.getElementById("btn-comedy");
 const divCards = document.getElementById("div-cards");
 
 let isFavorite = false
@@ -68,7 +70,21 @@ btnAction.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   createCard(findGenre.movies);
-})
+});
+
+btnClassics.addEventListener("click", async () => {
+  const textValue = btnClassics.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
+
+btnComedy.addEventListener("click", async () => {
+  const textValue = btnComedy.textContent;
+  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
+
+  createCard(findGenre.movies);
+});
 
 window.addEventListener("load", async () => {
   await createCard(moviesHome);
