@@ -1,6 +1,6 @@
-import { allGenreAndMovies, moviesHome } from './data/datahome.js';
-import { fetchAPI } from './services/fetchApiHome.js';
-import './style.css';
+import { allGenreAndMovies, moviesHome } from '../data/datahome.js';
+import { fetchAPI } from '../services/fetchApiHome.js';
+import '../style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
