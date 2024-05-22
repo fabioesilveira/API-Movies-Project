@@ -30,6 +30,33 @@ btnRegister.addEventListener("click", (event) => {
     user.favoriteGenre = inputOptionMovies.value
     
     const data = JSON.parse(localStorage.getItem("users"));
-    data.push(user)
-    localStorage.setItem("users", JSON.stringify(data))
+    const checkUser = data.find(element => element.email === inputEmail.value)
+
+    if (checkUser) {
+        return alert("this email is already taken, please enter a new one")
+    } else {
+        data.push(user)
+        localStorage.setItem("users", JSON.stringify(data))
+        alert("you've been registered succesfully!!")
+        window.location.reload();
+    }
+
+});
+
+bntSignin.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const data = JSON.parse(localStorage.getItem("users"));
+    const username = inputEmail.value
+    const password = inputPassword.value
+
+    const findUser = data.find(element => element.email === username && element.password === password)
+
+    if (findUser) {
+        localStorage.setItem("retrieveUserEmail", JSON.stringify(username))
+        return window.location.href = "/pages/homePage.html" 
+    } else {
+        return alert("please, checkout email or password don't match")
+    }
+
 })
