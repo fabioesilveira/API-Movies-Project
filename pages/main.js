@@ -15,7 +15,7 @@ const btnScienceFiction = document.getElementById("btn-science-fiction");
 const btnAnimes = document.getElementById("btn-animes");
 const btnSeries = document.getElementById("btn-series");
 const divCards = document.getElementById("div-cards");
-const retrieveUser = document.getElementById("retrieve-user-email");
+const divRetrieveUser = document.getElementById("retrieve-user-email");
 
 let isFavorite = false
 
@@ -41,11 +41,15 @@ async function createCard(movies) {
     </div>`)
 };
 
-function favoritesMovies() {
+const favoritesListMovies = JSON.parse(localStorage.getItem("retrieveUser"));
+
+function favoritesMovies(movies) {
   const iconsStar = document.querySelectorAll(".icons-star")
-  iconsStar.forEach(element => {
-    element.addEventListener("click", () => {
-      element.classList.add("favorite")
+  iconsStar.forEach((e, i) => {
+    e.addEventListener("click", () => {
+      e.classList.add("favorite")
+      favoritesListMovies.movies.push(movies[i]);
+      localStorage.setItem("retrieveUser", JSON.stringify(favoritesListMovies));
     })
   });
 };
@@ -55,7 +59,7 @@ btnHorror.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toUpperCase() === textValue);
 
   await createCard(findGenre.movies);
-  favoritesMovies();
+  favoritesMovies(findGenre.movies);
 });
 
 btnThriller.addEventListener("click", async () => {
@@ -63,7 +67,7 @@ btnThriller.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   await createCard(findGenre.movies);
-  favoritesMovies();
+  favoritesMovies(findGenre.movies);
 });
 
 btnMarvel.addEventListener("click", async () => {
@@ -71,7 +75,7 @@ btnMarvel.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   await createCard(findGenre.movies);
-  favoritesMovies();
+  favoritesMovies(findGenre.movies);
 });
 
 btnDrama.addEventListener("click", async () => {
@@ -79,7 +83,7 @@ btnDrama.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   await createCard(findGenre.movies);
-  favoritesMovies();
+  favoritesMovies(findGenre.movies);
 });
 
 btnAction.addEventListener("click", async () => {
@@ -87,7 +91,7 @@ btnAction.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   await createCard(findGenre.movies);
-  favoritesMovies();
+  favoritesMovies(findGenre.movies);
 });
 
 btnClassics.addEventListener("click", async () => {
@@ -95,7 +99,7 @@ btnClassics.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   await createCard(findGenre.movies);
-  favoritesMovies();
+  favoritesMovies(findGenre.movies);
 });
 
 btnComedy.addEventListener("click", async () => {
@@ -103,7 +107,7 @@ btnComedy.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   await createCard(findGenre.movies);
-  favoritesMovies();
+  favoritesMovies(findGenre.movies);
 });
 
 btnScienceFiction.addEventListener("click", async () => {
@@ -111,7 +115,7 @@ btnScienceFiction.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
   await createCard(findGenre.movies);
-  favoritesMovies();
+  favoritesMovies(findGenre.movies);
 });
 
 btnAnimes.addEventListener("click", async () => {
@@ -119,7 +123,7 @@ btnAnimes.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
  await createCard(findGenre.movies);
- favoritesMovies();
+ favoritesMovies(findGenre.movies);
 });
 
 btnSeries.addEventListener("click", async () => {
@@ -127,15 +131,12 @@ btnSeries.addEventListener("click", async () => {
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
  await createCard(findGenre.movies);
- favoritesMovies();
+ favoritesMovies(findGenre.movies);
 });
 
 window.addEventListener("load", async () => {
- const retrieveUserEmail = JSON.parse(localStorage.getItem("retrieveUserEmail"));
- retrieveUser.innerHTML = retrieveUserEmail
-
- const favoritesMovies = {
-  user: retrieveUserEmail,
-  movies: [],
- }
+ const retrieveUser = JSON.parse(localStorage.getItem("retrieveUser"));
+ divRetrieveUser.innerHTML = retrieveUser.email
+ await createCard(retrieveUser.movies)
+ 
 }) 

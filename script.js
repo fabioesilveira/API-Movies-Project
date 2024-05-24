@@ -10,7 +10,8 @@ const bntSignin = document.getElementById("btn-signin");
 const user = {
     email: "",
     password: "",
-    favoriteGenre: ""
+    favoriteGenre: "",
+    movies: []
 }
 
 function userRegister() {
@@ -53,7 +54,7 @@ bntSignin.addEventListener("click", (event) => {
     const findUser = data.find(element => element.email === username && element.password === password)
 
     if (findUser) {
-        localStorage.setItem("retrieveUserEmail", JSON.stringify(username))
+        localStorage.setItem("retrieveUser", JSON.stringify(findUser))
         return window.location.href = "/pages/homePage.html" 
     } else {
         return alert("please, checkout email or password don't match")
