@@ -76,5 +76,10 @@
   font-family: "Limelight", sans-serif;
 }
   
-  
+ .div-user-retrieved-info{
+  display: flex;
+  justify-content: center;
+  font-family: "Caveat", cursive;
+  font-size: xx-large;
+ } 
 

@@ -16,6 +16,7 @@ const btnAnimes = document.getElementById("btn-animes");
 const btnSeries = document.getElementById("btn-series");
 const divCards = document.getElementById("div-cards");
 const divRetrieveUser = document.getElementById("retrieve-user-email");
+const divRetrieveName = document.getElementById("retrieve-user-name");
 
 let isFavorite = false
 
@@ -137,6 +138,7 @@ btnSeries.addEventListener("click", async () => {
 window.addEventListener("load", async () => {
  const retrieveUser = JSON.parse(localStorage.getItem("retrieveUser"));
  divRetrieveUser.innerHTML = retrieveUser.email
+ divRetrieveName.innerHTML = retrieveUser.name
  await createCard(retrieveUser.movies)
  
 }) 

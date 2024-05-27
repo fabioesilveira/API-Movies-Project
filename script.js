@@ -3,14 +3,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const inputEmail = document.getElementById("input-email");
 const inputPassword = document.getElementById("input-password");
-const inputOptionMovies = document.getElementById("input-option-movies");
+const inputName = document.getElementById("input-name");
 const btnRegister = document.getElementById("btn-register");
 const bntSignin = document.getElementById("btn-signin");
 
 const user = {
     email: "",
     password: "",
-    favoriteGenre: "",
+    name: "",
     movies: []
 }
 
@@ -18,8 +18,6 @@ function userRegister() {
     if (!localStorage.getItem("users")) {
         localStorage.setItem("users", JSON.stringify([]))
     };
-
-
 }
 
 userRegister();
@@ -28,13 +26,13 @@ btnRegister.addEventListener("click", (event) => {
     event.preventDefault()
     user.email = inputEmail.value 
     user.password = inputPassword.value
-    user.favoriteGenre = inputOptionMovies.value
+    user.name = inputName.value
     
     const data = JSON.parse(localStorage.getItem("users"));
     const checkUser = data.find(element => element.email === inputEmail.value)
 
     if (checkUser) {
-        return alert("this email is already taken, please enter a new one")
+        return alert("this email has been taken, please enter a new one")
     } else {
         data.push(user)
         localStorage.setItem("users", JSON.stringify(data))

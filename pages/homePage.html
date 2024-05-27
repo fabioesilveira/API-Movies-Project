@@ -69,10 +69,13 @@
           <li class="nav-item">
             <a id="btn-series" class="nav-link" href="#">SERIES</a>
           </li>
+
+          <li class="nav-item">
+            <a id="btn-series" class="nav-link btn text-dark bg-danger border-bottom border-body btn-nav-signout" href="/index.html">SIGN OUT</a>
+          </li>
         </ul>
 
-        <button id="btn-logout" class="btn text-danger border-bottom border-body btn-nav-signout"
-          style="background-color: #ffffff" type="submit">Log out</button>
+        
 
       </div>
     </div>
@@ -84,6 +87,13 @@
 
   <h2 class="h3-home">Welcome to It's Movie Time. Looking for something fun to watch? We got you!</h2>
 
+  <div class="div-user-retrieved-info">
+    <p>Hello, </p>
+    <span id="retrieve-user-name"></span>
+    <p>! Your account is registered on the email: </p>
+    <span id="retrieve-user-email"></span>
+  </div>
+
   <div class="container img-box">
     <img class="img-home" src="/assets/images/logo1.png">
   </div>
@@ -92,6 +102,7 @@
   <div class="container">
     <h3 class="div-h3">⭐ User's gallery of favorites movies saved ⭐</h3>
     <h5>Navigate through genre and save your favorites movies here.</h5>
+    <span id="retrieve-user-name"></span>
     <span id="retrieve-user-email"></span>
 
     <div id="div-cards" class="row"></div>
