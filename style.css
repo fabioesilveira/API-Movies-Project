@@ -18,7 +18,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 45%; 
+  width: 38%; 
 }
 
 .div-h3 {
@@ -82,4 +82,11 @@
   font-family: "Caveat", cursive;
   font-size: xx-large;
  } 
+
+ .h5-home-page {
+  display: flex;
+  justify-content: center;
+  font-family: "Limelight", sans-serif;
+  font-size: x-large;
+ }
 

@@ -1,3 +1,4 @@
+import { isValidEmail } from './regex.js';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,13 +22,17 @@ function userRegister() {
 }
 
 userRegister();
-
+ //TODO: Verify is password has more than 6 characters, letters an numbers/ 
 btnRegister.addEventListener("click", (event) => {
     event.preventDefault()
     user.email = inputEmail.value 
     user.password = inputPassword.value
     user.name = inputName.value
-    
+
+    if (!isValidEmail(user.email)) {
+        return alert("this is not an email, please enter a correct one")
+    }
+
     const data = JSON.parse(localStorage.getItem("users"));
     const checkUser = data.find(element => element.email === inputEmail.value)
 
@@ -53,7 +58,7 @@ bntSignin.addEventListener("click", (event) => {
 
     if (findUser) {
         localStorage.setItem("retrieveUser", JSON.stringify(findUser))
-        return window.location.href = "/pages/homePage.html" 
+        return window.location.href = "./pages/homePage.html" 
     } else {
         return alert("please, checkout email or password don't match")
     }
