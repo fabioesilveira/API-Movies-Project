@@ -1,4 +1,4 @@
-import { isValidEmail } from './regex.js';
+import { isValidEmail, isValidPassword } from './regex.js';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -31,6 +31,10 @@ btnRegister.addEventListener("click", (event) => {
 
     if (!isValidEmail(user.email)) {
         return alert("this is not an email, please enter a correct one")
+    };
+
+    if (!isValidPassword(user.password)) {
+        return alert("Your password must has, at least one: lowercase letter, uppercase letter, number, special character, is at least 8 digit")
     }
 
     const data = JSON.parse(localStorage.getItem("users"));
