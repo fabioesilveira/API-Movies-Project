@@ -45,7 +45,7 @@ btnRegister.addEventListener("click", (event) => {
     } else {
         data.push(user)
         localStorage.setItem("users", JSON.stringify(data))
-        alert("you've been registered succesfully!!")
+        alert("You've been successfully registered!!")
         window.location.reload();
     }
 
@@ -64,7 +64,7 @@ bntSignin.addEventListener("click", (event) => {
         localStorage.setItem("retrieveUser", JSON.stringify(findUser))
         return window.location.href = "./pages/homepage.html" 
     } else {
-        return alert("please, checkout email or password don't match")
+        return alert("Please, checkout email or password don't match")
     }
 
 })
