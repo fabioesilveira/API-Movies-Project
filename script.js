@@ -30,18 +30,18 @@ btnRegister.addEventListener("click", (event) => {
     user.name = inputName.value
 
     if (!isValidEmail(user.email)) {
-        return alert("this is not an email, please enter a correct one")
+        return alert("This is not a valid email. Please enter a correct one")
     };
 
     if (!isValidPassword(user.password)) {
-        return alert("Your password must has, at least one: lowercase letter, uppercase letter, number, special character, is at least 8 digit")
+        return alert("Your password must have at least one: lowercase letter, uppercase letter, number, special character and be at least 8 digits")
     }
 
     const data = JSON.parse(localStorage.getItem("users"));
     const checkUser = data.find(element => element.email === inputEmail.value)
 
     if (checkUser) {
-        return alert("this email has been taken, please enter a new one")
+        return alert("This email is already in use. Please enter a new one.")
     } else {
         data.push(user)
         localStorage.setItem("users", JSON.stringify(data))

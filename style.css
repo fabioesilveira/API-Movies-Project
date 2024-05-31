@@ -80,13 +80,12 @@
   display: flex;
   justify-content: center;
   font-family: "Caveat", cursive;
-  font-size: xx-large;
+  font-size: 38px;
  } 
 
  .h5-home-page {
   display: flex;
   justify-content: center;
-  font-family: "Limelight", sans-serif;
   font-size: x-large;
  }
 
