@@ -1,8 +1,5 @@
 import { allGenreAndMovies } from '../data/datahome.js';
 import { fetchAPI } from '../services/fetchApiHome.js';
-import '../style.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 const btnThriller = document.getElementById("btn-thriller");
 const btnHorror = document.getElementById("btn-horror");

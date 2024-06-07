@@ -5,6 +5,4 @@ export const isValidEmail = (email) => emailRegex.test(email);
 export const isValidPassword = (password) => passwordRegex.test(password);
   
   
-  
-  
 

@@ -1,6 +1,5 @@
 import { isValidEmail, isValidPassword } from './regex.js';
-import './style.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const inputEmail = document.getElementById("input-email");
 const inputPassword = document.getElementById("input-password");
@@ -22,7 +21,7 @@ function userRegister() {
 }
 
 userRegister();
- //TODO: Verify is password has more than 6 characters, letters an numbers/ 
+
 btnRegister.addEventListener("click", (event) => {
     event.preventDefault()
     user.email = inputEmail.value 
@@ -62,9 +61,9 @@ bntSignin.addEventListener("click", (event) => {
 
     if (findUser) {
         localStorage.setItem("retrieveUser", JSON.stringify(findUser))
-        return window.location.href = "../pages/homepage.html" 
+        return window.location.href = "./pages/homepage.html" 
     } else {
         return alert("Please, checkout email or password don't match")
     }
 
-})
+});
