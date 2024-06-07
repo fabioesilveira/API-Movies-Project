@@ -61,7 +61,7 @@ bntSignin.addEventListener("click", (event) => {
 
     if (findUser) {
         localStorage.setItem("retrieveUser", JSON.stringify(findUser))
-        return window.location.href = "../pages/homepage.html" 
+        return window.location.href = "./pages/homepage.html" 
     } else {
         return alert("Please, checkout email or password don't match")
     }
