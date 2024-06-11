@@ -1,5 +1,5 @@
-import { allGenreAndMovies } from '../data/datahome.js';
-import { fetchAPI } from '../services/fetchApiHome.js';
+import { allGenreAndMovies } from '../../data/datahome.js';
+import { fetchAPI } from '../../services/fetchApiHome.js';
 
 const btnThriller = document.getElementById("btn-thriller");
 const btnHorror = document.getElementById("btn-horror");
@@ -11,15 +11,19 @@ const btnComedy = document.getElementById("btn-comedy");
 const btnScienceFiction = document.getElementById("btn-science-fiction");
 const btnAnimes = document.getElementById("btn-animes");
 const btnSeries = document.getElementById("btn-series");
+const btnOut = document.getElementById('btn-out');
 const divCards = document.getElementById("div-cards");
 const divRetrieveUser = document.getElementById("retrieve-user-email");
 const divRetrieveName = document.getElementById("retrieve-user-name");
 
+const retrieveUser = JSON.parse(localStorage.getItem("retrieveUser"));
+const users = JSON.parse(localStorage.getItem("users"));
+
 let isFavorite = false
 
 async function createCard(movies) {
-  const data = await fetchAPI(movies)
-  divCards.innerHTML = ""
+  const data = await fetchAPI(movies);
+  divCards.innerHTML = "";
   data.map(element => divCards.innerHTML += `
     <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
       <div class="card mb-3" style="width: 22rem;">
@@ -39,25 +43,23 @@ async function createCard(movies) {
     </div>`)
 };
 
-const favoritesListMovies = JSON.parse(localStorage.getItem("retrieveUser"));
-
 function favoritesMovies(movies) {
   const iconsStar = document.querySelectorAll(".icons-star")
   iconsStar.forEach((e, i) => {
     e.addEventListener("click", () => {
-      const moviesLS = JSON.parse(localStorage.getItem("retrieveUser"));
-      const findMovie = moviesLS.movies.find((element) => element === movies[i])
+      const findMovie = retrieveUser.movies.find((element) => element === movies[i]);
+
       if (!findMovie) {
         e.classList.add("favorite")
-        favoritesListMovies.movies.push(movies[i]);
-        localStorage.setItem("retrieveUser", JSON.stringify(favoritesListMovies));
-      }
+        retrieveUser.movies.push(movies[i]);
+        localStorage.setItem("retrieveUser", JSON.stringify(retrieveUser));
+      };
+      
       if (findMovie) {
         e.classList.remove("favorite")
-        console.log(favoritesListMovies)
-        const deleteMovie = favoritesListMovies.movies.filter(element => element != movies[i]);
-        localStorage.setItem("retrieveUser", JSON.stringify(deleteMovie));
-        return null
+        const deleteMovie = retrieveUser.movies.filter(element => element != movies[i]);
+        retrieveUser.movies = deleteMovie;
+        localStorage.setItem("retrieveUser", JSON.stringify(retrieveUser));
       }
     })
   });
@@ -143,10 +145,23 @@ btnSeries.addEventListener("click", async () => {
   favoritesMovies(findGenre.movies);
 });
 
+btnOut.addEventListener("click", () => {
+  const findUser = users.findIndex(e => e.email === retrieveUser.email);
+  users[findUser].movies = retrieveUser.movies;
+
+  console.log(users);
+  localStorage.setItem('users', JSON.stringify(users));
+  window.location.href = "../../index.html"
+})
+
 window.addEventListener("load", async () => {
-  const retrieveUser = JSON.parse(localStorage.getItem("retrieveUser"));
+  if (!retrieveUser) {
+    window.location.href = "../../index.html"
+  }
+
   divRetrieveUser.innerHTML = retrieveUser.email
   divRetrieveName.innerHTML = retrieveUser.name
-  await createCard(retrieveUser.movies)
+  await createCard(retrieveUser.movies);
+  // favoritesMovies(findGenre.movies);
 
 }) 

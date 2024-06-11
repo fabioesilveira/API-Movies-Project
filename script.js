@@ -20,8 +20,6 @@ function userRegister() {
     };
 }
 
-userRegister();
-
 btnRegister.addEventListener("click", (event) => {
     event.preventDefault()
     user.email = inputEmail.value 
@@ -61,9 +59,13 @@ bntSignin.addEventListener("click", (event) => {
 
     if (findUser) {
         localStorage.setItem("retrieveUser", JSON.stringify(findUser))
-        return window.location.href = "./pages/homepage.html" 
+        return window.location.href = "./pages/movies" 
     } else {
         return alert("Please, checkout email or password don't match")
     }
 
 });
+
+
+
+userRegister();
