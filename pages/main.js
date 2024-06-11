@@ -45,9 +45,20 @@ function favoritesMovies(movies) {
   const iconsStar = document.querySelectorAll(".icons-star")
   iconsStar.forEach((e, i) => {
     e.addEventListener("click", () => {
-      e.classList.add("favorite")
-      favoritesListMovies.movies.push(movies[i]);
-      localStorage.setItem("retrieveUser", JSON.stringify(favoritesListMovies));
+      const moviesLS = JSON.parse(localStorage.getItem("retrieveUser"));
+      const findMovie = moviesLS.movies.find((element) => element === movies[i])
+      if (!findMovie) {
+        e.classList.add("favorite")
+        favoritesListMovies.movies.push(movies[i]);
+        localStorage.setItem("retrieveUser", JSON.stringify(favoritesListMovies));
+      }
+      if (findMovie) {
+        e.classList.remove("favorite")
+        console.log(favoritesListMovies)
+        const deleteMovie = favoritesListMovies.movies.filter(element => element != movies[i]);
+        localStorage.setItem("retrieveUser", JSON.stringify(deleteMovie));
+        return null
+      }
     })
   });
 };
@@ -120,22 +131,22 @@ btnAnimes.addEventListener("click", async () => {
   const textValue = btnAnimes.textContent;
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
- await createCard(findGenre.movies);
- favoritesMovies(findGenre.movies);
+  await createCard(findGenre.movies);
+  favoritesMovies(findGenre.movies);
 });
 
 btnSeries.addEventListener("click", async () => {
   const textValue = btnSeries.textContent;
   const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
 
- await createCard(findGenre.movies);
- favoritesMovies(findGenre.movies);
+  await createCard(findGenre.movies);
+  favoritesMovies(findGenre.movies);
 });
 
 window.addEventListener("load", async () => {
- const retrieveUser = JSON.parse(localStorage.getItem("retrieveUser"));
- divRetrieveUser.innerHTML = retrieveUser.email
- divRetrieveName.innerHTML = retrieveUser.name
- await createCard(retrieveUser.movies)
- 
+  const retrieveUser = JSON.parse(localStorage.getItem("retrieveUser"));
+  divRetrieveUser.innerHTML = retrieveUser.email
+  divRetrieveName.innerHTML = retrieveUser.name
+  await createCard(retrieveUser.movies)
+
 }) 
