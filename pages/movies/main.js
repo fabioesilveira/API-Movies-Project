@@ -11,157 +11,152 @@ const btnComedy = document.getElementById("btn-comedy");
 const btnScienceFiction = document.getElementById("btn-science-fiction");
 const btnAnimes = document.getElementById("btn-animes");
 const btnSeries = document.getElementById("btn-series");
-const btnOut = document.getElementById('btn-out');
 const divCards = document.getElementById("div-cards");
+const btnOut = document.getElementById("btn-out");
+
+// these may no longer exist in the HTML – so we guard when using them
 const divRetrieveUser = document.getElementById("retrieve-user-email");
 const divRetrieveName = document.getElementById("retrieve-user-name");
-
-const retrieveUser = JSON.parse(localStorage.getItem("retrieveUser"));
-const users = JSON.parse(localStorage.getItem("users"));
-
-let isFavorite = false
 
 async function createCard(movies) {
   const data = await fetchAPI(movies);
   divCards.innerHTML = "";
-  data.map(element => divCards.innerHTML += `
-    <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
-      <div class="card mb-3" style="width: 22rem;">
-        <img src="${element.Poster}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <button class="btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill icon-favorite icons-star" viewBox="0 0 16 16">
-          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-          </svg>
-          </button>
-          <h5 class="card-title">Title: ${element.Title}</h5>
-          <p class="card-text">Description: ${element.Plot}</p>
-          <p class="card-text">Relesead date: ${element.Released}</p>
-          
+
+  data.forEach((element) => {
+    divCards.innerHTML += `
+      <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
+        <div class="card mb-3" style="width: 22rem;">
+          <img src="${element.Poster}" class="card-img-top" alt="${element.Title}">
+          <div class="card-body">
+            <button class="btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                   fill="currentColor"
+                   class="bi bi-star-fill icon-favorite icons-star"
+                   viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 
+                         6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 
+                         0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 
+                         3.356.83 4.73c.078.443-.36.79-.746.592L8 
+                         13.187l-4.389 2.256z"/>
+              </svg>
+            </button>
+            <h5 class="card-title">Title: ${element.Title}</h5>
+            <p class="card-text">Description: ${element.Plot}</p>
+            <p class="card-text">Released date: ${element.Released}</p>
+          </div> 
         </div> 
-      </div> 
-    </div>`)
-};
+      </div>
+    `;
+  });
+}
+
+// ---- favorites storage helper ----
+function getFavoritesObject() {
+  // we expect an object like: { email, name, movies: [] }
+  const stored = localStorage.getItem("retrieveUser");
+  if (!stored) {
+    return { movies: [] };
+  }
+  try {
+    const parsed = JSON.parse(stored);
+    if (!parsed.movies) {
+      return { ...parsed, movies: [] };
+    }
+    return parsed;
+  } catch {
+    return { movies: [] };
+  }
+}
+
+function saveFavoritesObject(obj) {
+  localStorage.setItem("retrieveUser", JSON.stringify(obj));
+}
 
 function favoritesMovies(movies) {
-  const iconsStar = document.querySelectorAll(".icons-star")
-  iconsStar.forEach((e, i) => {
-    e.addEventListener("click", () => {
-      const findMovie = retrieveUser.movies.find((element) => element === movies[i]);
+  const iconsStar = document.querySelectorAll(".icons-star");
 
-      if (!findMovie) {
-        e.classList.add("favorite")
-        retrieveUser.movies.push(movies[i]);
-        localStorage.setItem("retrieveUser", JSON.stringify(retrieveUser));
-      };
-      
-      if (findMovie) {
-        e.classList.remove("favorite")
-        const deleteMovie = retrieveUser.movies.filter(element => element != movies[i]);
-        retrieveUser.movies = deleteMovie;
-        localStorage.setItem("retrieveUser", JSON.stringify(retrieveUser));
+  iconsStar.forEach((icon, i) => {
+    icon.addEventListener("click", () => {
+      let favorites = getFavoritesObject();
+      const currentMovie = movies[i];
+
+      const alreadyFavorite = favorites.movies.some((m) => m === currentMovie);
+
+      if (!alreadyFavorite) {
+        icon.classList.add("favorite");
+        favorites.movies.push(currentMovie);
+        saveFavoritesObject(favorites);
+      } else {
+        icon.classList.remove("favorite");
+        favorites.movies = favorites.movies.filter((m) => m !== currentMovie);
+        saveFavoritesObject(favorites);
       }
-    })
+    });
   });
-};
+}
 
-btnHorror.addEventListener("click", async () => {
-  const textValue = btnHorror.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toUpperCase() === textValue);
+// ---- buttons by genre ----
+function handleGenreButton(btn) {
+  btn.addEventListener("click", async () => {
+    const textValue = btn.textContent.trim().toUpperCase();
+    const findGenre = allGenreAndMovies.find(
+      (element) => element.genre.toUpperCase() === textValue
+    );
 
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
+    if (!findGenre) return;
+
+    await createCard(findGenre.movies);
+    favoritesMovies(findGenre.movies);
+  });
+}
+
+[
+  btnHorror,
+  btnThriller,
+  btnMarvel,
+  btnDrama,
+  btnAction,
+  btnClassics,
+  btnComedy,
+  btnScienceFiction,
+  btnAnimes,
+  btnSeries,
+].forEach((btn) => {
+  if (btn) handleGenreButton(btn);
 });
 
-btnThriller.addEventListener("click", async () => {
-  const textValue = btnThriller.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnMarvel.addEventListener("click", async () => {
-  const textValue = btnMarvel.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnDrama.addEventListener("click", async () => {
-  const textValue = btnDrama.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnAction.addEventListener("click", async () => {
-  const textValue = btnAction.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnClassics.addEventListener("click", async () => {
-  const textValue = btnClassics.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnComedy.addEventListener("click", async () => {
-  const textValue = btnComedy.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnScienceFiction.addEventListener("click", async () => {
-  const textValue = btnScienceFiction.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnAnimes.addEventListener("click", async () => {
-  const textValue = btnAnimes.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnSeries.addEventListener("click", async () => {
-  const textValue = btnSeries.textContent;
-  const findGenre = allGenreAndMovies.find(element => element.genre.toLocaleUpperCase() === textValue);
-
-  await createCard(findGenre.movies);
-  favoritesMovies(findGenre.movies);
-});
-
-btnOut.addEventListener("click", () => {
-  const findUser = users.findIndex(e => e.email === retrieveUser.email);
-  users[findUser].movies = retrieveUser.movies;
-
-  console.log(users);
-  localStorage.setItem('users', JSON.stringify(users));
-  window.location.href = "../../index.html"
-})
-
+// ---- initial load ----
 window.addEventListener("load", async () => {
-  if (!retrieveUser) {
-    window.location.href = "../../index.html"
+  const retrieveUser = getFavoritesObject();
+
+  // only try to show name/email if those elements exist and values exist
+  if (divRetrieveUser && retrieveUser.email) {
+    divRetrieveUser.innerHTML = retrieveUser.email;
+  }
+  if (divRetrieveName && retrieveUser.name) {
+    divRetrieveName.innerHTML = retrieveUser.name;
   }
 
-  divRetrieveUser.innerHTML = retrieveUser.email
-  divRetrieveName.innerHTML = retrieveUser.name
-  await createCard(retrieveUser.movies);
-  // favoritesMovies(findGenre.movies);
+  if (retrieveUser.movies && retrieveUser.movies.length > 0) {
+    await createCard(retrieveUser.movies);
+    favoritesMovies(retrieveUser.movies);
+  }
+});
 
-}) 
+// SIGN OUT
+
+if (btnOut) {
+  btnOut.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    // remove current logged user (or clear all if you prefer)
+    localStorage.removeItem("retrieveUser");
+    // optional: also clear favorites tied to user if you stored separately
+    // localStorage.removeItem("users");
+
+    // redirect back to login page (root index.html)
+    window.location.href = "../../index.html"; 
+    // if you're serving from root and this file path is different, 
+    // `/index.html` also works.
+  });
+}
