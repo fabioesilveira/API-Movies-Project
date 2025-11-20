@@ -4,6 +4,8 @@ A fully-interactive movie browsing platform built with **HTML, CSS, JavaScript, 
 
 This project allows users to register, sign in, explore movies by category, save favorites, and revisit them on the home page — all stored locally and rendered responsively.
 
+[Live Demo Link](https://fabioesilveira.github.io/API-Movies-Project/index.html)
+
 ---
 
 ### User Authentication
@@ -87,6 +89,10 @@ GitHub: [https://github.com/fabioesilveira](https://github.com/fabioesilveira)
 
 ## Deployed Site
 
-![Screenshot of Deployed Website]()
+![Screenshot of Deployed Website](/assets/images/Screenshot1.png)
 
-[Live Demo Link](https://fabioesilveira.github.io/hype-radar/)
+![Screenshot of Deployed Website](/assets/images/Screenshot2.png)
+
+![Screenshot of Deployed Website](/assets/images/Screenshot3.png)
+
+[Live Demo Link](https://fabioesilveira.github.io/API-Movies-Project/index.html)
