@@ -1,5 +1,5 @@
-import { allGenreAndMovies } from '../../data/datahome.js';
-import { fetchAPI } from '../../services/fetchApiHome.js';
+import { allGenreAndMovies } from "../../data/datahome.js";
+import { fetchAPI } from "../../services/fetchApiHome.js";
 
 const btnThriller = document.getElementById("btn-thriller");
 const btnHorror = document.getElementById("btn-horror");
@@ -11,67 +11,26 @@ const btnComedy = document.getElementById("btn-comedy");
 const btnScienceFiction = document.getElementById("btn-science-fiction");
 const btnAnimes = document.getElementById("btn-animes");
 const btnSeries = document.getElementById("btn-series");
-const divCards = document.getElementById("div-cards");
+const btnHome = document.getElementById("btn-home");
 const btnOut = document.getElementById("btn-out");
 
-// these may no longer exist in the HTML – so we guard when using them
+const divCards = document.getElementById("div-cards");
 const divRetrieveUser = document.getElementById("retrieve-user-email");
-const divRetrieveName = document.getElementById("retrieve-user-name");
+const homeBlock = document.getElementById("home-block");
+const loader = document.getElementById("loader");
 
-function showLoader() {
-  const loader = document.getElementById("loader");
-  if (loader) loader.classList.remove("hide");
-}
-
-function hideLoader() {
-  const loader = document.getElementById("loader");
-  if (loader) loader.classList.add("hide");
-}
-
-async function createCard(movies) {
-  showLoader();   // <--- show spinner
-
-  const data = await fetchAPI(movies);
-
-  hideLoader();   // <--- hide spinner
-
-  divCards.innerHTML = "";
-
-  data.forEach(element => {
-    divCards.innerHTML += `
-      <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
-        <div class="card mb-3" style="width: 22rem;">
-          <img src="${element.Poster}" class="card-img-top" alt="${element.Title}">
-          <div class="card-body">
-            <button class="btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                fill="currentColor" class="bi bi-star-fill icon-favorite icons-star">
-                <path d="M3.612 15.443c-.386..."/>
-              </svg>
-            </button>
-            <h5 class="card-title">Title: ${element.Title}</h5>
-            <p class="card-text">Description: ${element.Plot}</p>
-            <p class="card-text">Released date: ${element.Released}</p>
-          </div>
-        </div>
-      </div>`;
-  });
-}
-
-// ---- favorites storage helper ----
+// 🔹 Helpers for favorites
 function getFavoritesObject() {
-  // we expect an object like: { email, name, movies: [] }
   const stored = localStorage.getItem("retrieveUser");
-  if (!stored) {
-    return { movies: [] };
-  }
+  if (!stored) return { movies: [] };
+
   try {
     const parsed = JSON.parse(stored);
     if (!parsed.movies) {
       return { ...parsed, movies: [] };
     }
     return parsed;
-  } catch {
+  } catch (e) {
     return { movies: [] };
   }
 }
@@ -80,32 +39,88 @@ function saveFavoritesObject(obj) {
   localStorage.setItem("retrieveUser", JSON.stringify(obj));
 }
 
-function favoritesMovies(movies) {
-  const iconsStar = document.querySelectorAll(".icons-star");
+// 🔹 Create cards (used for both HOME + genres)
+async function createCard(movies) {
+  if (!movies || movies.length === 0) {
+    divCards.innerHTML = "<p>No movies to display.</p>";
+    return;
+  }
 
-  iconsStar.forEach((icon, i) => {
-    icon.addEventListener("click", () => {
-      let favorites = getFavoritesObject();
-      const currentMovie = movies[i];
+  // 👉 clear previous cards immediately
+  divCards.innerHTML = "";
 
-      const alreadyFavorite = favorites.movies.some((m) => m === currentMovie);
+  // show loader
+  if (loader) loader.classList.remove("hide");
 
-      if (!alreadyFavorite) {
-        icon.classList.add("favorite");
-        favorites.movies.push(currentMovie);
-        saveFavoritesObject(favorites);
-      } else {
-        icon.classList.remove("favorite");
-        favorites.movies = favorites.movies.filter((m) => m !== currentMovie);
-        saveFavoritesObject(favorites);
-      }
+  try {
+    const data = await fetchAPI(movies);
+
+    data.forEach((element) => {
+      divCards.innerHTML += `
+        <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
+          <div class="card mb-3" style="width: 22rem;">
+            <img src="${element.Poster}" class="card-img-top" alt="${element.Title}">
+            <div class="card-body">
+              <button class="btn btn-fav">
+                <i class="bi bi-star-fill"></i>
+              </button>
+              <h5 class="card-title">Title: ${element.Title}</h5>
+              <p class="card-text">Description: ${element.Plot}</p>
+              <p class="card-text">Released date: ${element.Released}</p>
+            </div> 
+          </div> 
+        </div>
+      `;
     });
+  } catch (err) {
+    console.error("Error loading movies:", err);
+    divCards.innerHTML = "<p>There was an error loading movies.</p>";
+  } finally {
+    // hide loader
+    if (loader) loader.classList.add("hide");
+  }
+}
+
+// 🔹 Handle favorite toggle (movies = array of TITLE STRINGS)
+function favoritesMovies(movies) {
+  const favButtons = document.querySelectorAll(".btn-fav");
+  const currentFavorites = getFavoritesObject();
+
+  favButtons.forEach((btn, index) => {
+    const movieTitle = movies[index]; // string
+
+    // mark as favorite if already saved
+    const alreadyFavorite = currentFavorites.movies.includes(movieTitle);
+    if (alreadyFavorite) {
+      btn.classList.add("favorite");
+    }
+
+    // avoid stacking many listeners when changing genres/home
+    btn.onclick = () => {
+      let favs = getFavoritesObject();
+      const exists = favs.movies.includes(movieTitle);
+
+      if (!exists) {
+        btn.classList.add("favorite");
+        favs.movies.push(movieTitle);
+      } else {
+        btn.classList.remove("favorite");
+        favs.movies = favs.movies.filter((m) => m !== movieTitle);
+      }
+
+      saveFavoritesObject(favs);
+    };
   });
 }
 
-// ---- buttons by genre ----
+// 🔹 Click on genre buttons
 function handleGenreButton(btn) {
-  btn.addEventListener("click", async () => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    // hide home area when browsing a genre
+    if (homeBlock) homeBlock.classList.add("hide");
+
     const textValue = btn.textContent.trim().toUpperCase();
     const findGenre = allGenreAndMovies.find(
       (element) => element.genre.toUpperCase() === textValue
@@ -113,6 +128,7 @@ function handleGenreButton(btn) {
 
     if (!findGenre) return;
 
+    // findGenre.movies is an array of titles (strings)
     await createCard(findGenre.movies);
     favoritesMovies(findGenre.movies);
   });
@@ -133,38 +149,47 @@ function handleGenreButton(btn) {
   if (btn) handleGenreButton(btn);
 });
 
-// ---- initial load ----
+// 🔹 HOME button – show favorites again
+if (btnHome) {
+  btnHome.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    if (homeBlock) homeBlock.classList.remove("hide");
+
+    const retrieveUser = getFavoritesObject();
+
+    if (retrieveUser.movies && retrieveUser.movies.length > 0) {
+      await createCard(retrieveUser.movies); // movies = array of title strings
+      favoritesMovies(retrieveUser.movies);
+    } else {
+      divCards.innerHTML = "";
+    }
+  });
+}
+
+// 🔹 SIGN OUT
+if (btnOut) {
+  btnOut.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("retrieveUser");
+    window.location.href = "../../index.html";
+  });
+}
+
+// 🔹 Initial load – show HOME + favorites
 window.addEventListener("load", async () => {
   const retrieveUser = getFavoritesObject();
 
-  // only try to show name/email if those elements exist and values exist
+  if (homeBlock) homeBlock.classList.remove("hide");
+
   if (divRetrieveUser && retrieveUser.email) {
-    divRetrieveUser.innerHTML = retrieveUser.email;
-  }
-  if (divRetrieveName && retrieveUser.name) {
-    divRetrieveName.innerHTML = retrieveUser.name;
+    divRetrieveUser.textContent = retrieveUser.email;
   }
 
   if (retrieveUser.movies && retrieveUser.movies.length > 0) {
-    await createCard(retrieveUser.movies);
+    await createCard(retrieveUser.movies); // favorites are title strings
     favoritesMovies(retrieveUser.movies);
+  } else {
+    divCards.innerHTML = "";
   }
 });
-
-// SIGN OUT
-
-if (btnOut) {
-  btnOut.addEventListener("click", (event) => {
-    event.preventDefault();
-
-    // remove current logged user (or clear all if you prefer)
-    localStorage.removeItem("retrieveUser");
-    // optional: also clear favorites tied to user if you stored separately
-    // localStorage.removeItem("users");
-
-    // redirect back to login page (root index.html)
-    window.location.href = "../../index.html"; 
-    // if you're serving from root and this file path is different, 
-    // `/index.html` also works.
-  });
-}
