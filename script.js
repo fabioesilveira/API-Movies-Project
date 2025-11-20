@@ -1,4 +1,4 @@
-import { isValidEmail, isValidPassword } from './regex.js';
+import { isValidEmail, isValidPassword } from "./regex.js";
 
 const inputEmail = document.getElementById("input-email");
 const inputPassword = document.getElementById("input-password");
