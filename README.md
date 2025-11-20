@@ -6,6 +6,7 @@ This project allows users to register, sign in, explore movies by category, save
 
 [Live Demo Link](https://fabioesilveira.github.io/API-Movies-Project/index.html)
 
+
 ---
 
 ### User Authentication
