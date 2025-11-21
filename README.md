@@ -92,7 +92,7 @@ GitHub: [https://github.com/fabioesilveira](https://github.com/fabioesilveira)
 
 ![Screenshot of Deployed Website](/assets/images/Screenshot1.png)
 
-![Screenshot of Deployed Website](/assets/images/Screenshot2.png)
+![Screenshot of Deployed Website](/assets/images/Screenshot4.png)
 
 ![Screenshot of Deployed Website](/assets/images/Screenshot3.png)
 
